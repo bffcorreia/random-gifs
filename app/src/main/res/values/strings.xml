@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Random Gifs</string>
+  <string name="surprise_me">Surprise me!</string>
 </resources>
