@@ -1,3 +1,7 @@
 package io.github.bffcorreia.randomgifs
 
-data class Gif(var title: String, var url: String)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Gif(var title: String, var url: String) : Parcelable
