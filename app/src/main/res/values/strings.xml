@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Random Gifs</string>
   <string name="surprise_me">Surprise me!</string>
+  <string name="to">To</string>
+  <string name="subject">Subject</string>
+  <string name="body">Body</string>
+  <string name="share_with_love">Share ♥</string>
+  <string name="share">Share</string>
+  <string name="share_by_email">Share by Email</string>
 </resources>
