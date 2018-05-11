@@ -1,5 +1,6 @@
 package io.github.bffcorreia.randomgifs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
   private ImageView gifView;
   private Button surpriseMeView;
+  private Gif currentGif;
   private static int lastRandomNumber = -1;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     gifView = findViewById(R.id.gif);
     surpriseMeView = findViewById(R.id.surprise_me);
 
+    gifView.setOnClickListener(__ -> navigateToShareActivity());
     surpriseMeView.setOnClickListener(__ -> setRandomGif());
 
     setRandomGif();
@@ -31,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     GifRepository gifRepository = new GifRepository();
     List<Gif> gifs = gifRepository.getAll();
     int randomGif = getRandomNumberNotRepeated(gifs.size());
-    return gifs.get(randomGif);
+    currentGif = gifs.get(randomGif);
+    return currentGif;
   }
 
   private void setRandomGif() {
@@ -44,5 +48,11 @@ public class MainActivity extends AppCompatActivity {
     while (randomNumber == lastRandomNumber) randomNumber = random.nextInt(max);
     lastRandomNumber = randomNumber;
     return randomNumber;
+  }
+
+  private void navigateToShareActivity() {
+    Intent intent = new Intent(this, ShareActivity.class);
+    intent.putExtra("gif", currentGif);
+    startActivity(intent);
   }
 }
