@@ -7,15 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import java.util.List;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
   private ImageView gifView;
   private Button surpriseMeView;
   private Gif currentGif;
-  private static int lastRandomNumber = -1;
+  private GetRandomGif getRandomGif = new GetRandomGif(new GifRepository());
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -31,23 +29,12 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private Gif getRandomGif() {
-    GifRepository gifRepository = new GifRepository();
-    List<Gif> gifs = gifRepository.getAll();
-    int randomGif = getRandomNumberNotRepeated(gifs.size());
-    currentGif = gifs.get(randomGif);
+    currentGif = getRandomGif.run();
     return currentGif;
   }
 
   private void setRandomGif() {
     Glide.with(this).asGif().load(getRandomGif().getUrl()).into(gifView);
-  }
-
-  private int getRandomNumberNotRepeated(int max) {
-    Random random = new Random();
-    int randomNumber = random.nextInt(max);
-    while (randomNumber == lastRandomNumber) randomNumber = random.nextInt(max);
-    lastRandomNumber = randomNumber;
-    return randomNumber;
   }
 
   private void navigateToShareActivity() {
